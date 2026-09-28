@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — um único conjunto de cores semânticas, com tema claro e escuro.
+ * Heurística 4 (Consistência): os componentes usam apenas estes tokens,
+ * nunca cores soltas, para que botões, estados e alertas se comportem igual em toda a interface.
+ */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #f0f2f5;
+  --border: #dfe3e8;
+  --border-strong: #c5ccd5;
+  --text: #16202b;
+  --text-muted: #566273;
+  --text-subtle: #6b7686;
+
+  --accent: #1d4e89;
+  --accent-hover: #163d6c;
+  --accent-soft: #e7eef7;
+  --accent-text: #1d4e89;
+  --on-accent: #ffffff;
+
+  --success: #1b7a4b;
+  --success-soft: #e5f4ec;
+  --warning: #8a5a00;
+  --warning-soft: #fdf3dc;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --favorite: #b7791f;
+
+  --ring: #2f6fbd;
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.08);
+  --shadow-lg: 0 12px 32px -8px rgb(16 24 40 / 0.22);
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0e1116;
+  --surface: #161b22;
+  --surface-2: #1d232c;
+  --border: #2b323d;
+  --border-strong: #3b4452;
+  --text: #e7eaee;
+  --text-muted: #a3adba;
+  --text-subtle: #8a95a4;
+
+  --accent: #6ea3e8;
+  --accent-hover: #8db8ef;
+  --accent-soft: #1a2a40;
+  --accent-text: #8db8ef;
+  --on-accent: #0b1320;
+
+  --success: #4cc38a;
+  --success-soft: #12291e;
+  --warning: #e3b341;
+  --warning-soft: #2b2310;
+  --danger: #f47067;
+  --danger-soft: #2d1614;
+  --favorite: #e3b341;
+
+  --ring: #8db8ef;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.6);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-on-accent: var(--on-accent);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-favorite: var(--favorite);
+
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--shadow-lg);
+
+  /* Aptos (fonte padrão do Microsoft 365). Fallbacks equivalentes caso não esteja instalada. */
+  --font-sans: "Aptos", "Aptos Display", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Aptos Mono", "Cascadia Mono", Consolas, "SF Mono", ui-monospace, monospace;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Algarismos tabulares: dígitos do código e contadores não "pulam" ao mudar. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Foco sempre visível para quem navega por teclado (acessibilidade + heurística 1). */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animações discretas — e desligadas para quem prefere menos movimento. */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-toast-in { animation: toast-in 180ms ease-out both; }
+.animate-fade-in  { animation: fade-in 150ms ease-out both; }
+.animate-pop-in   { animation: pop-in 180ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
